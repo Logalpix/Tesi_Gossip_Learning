@@ -1,0 +1,16 @@
+services:
+  node:
+    build: .
+    ports:
+      - "4000"
+    environment:
+      - NODE_ENV=production
+    deploy:
+      mode: replicated
+      replicas: 8
+    networks:
+      - gossip_net
+
+networks:
+  gossip_net:
+    driver: bridge
