@@ -9,4 +9,4 @@ Per la comunicazione tra i nodi è stata usata la libreria libp2p.
 
 Per avviare l'apprendimento occorre lanciare da riga di comando il comando docker-compose build e in seguito docker-compose up (eventualmente con l'opzione -d per eseguire i container in background). Per fermare e rimuovere i container occorre lanciare il comando docker-compose down.
 
-Durante la build verranno scaricati sia i moduli di Node.js necessari per il progetto, sia il dataset su cui viene effettuato il training, salvati rispettivamente nelle cartelle node_modules e data. Verrà inoltre creata una cartella models, dove vengono salvati i modelli su cui i nodi effettuano il training.
+Durante la build verranno scaricati sia i moduli di Node.js necessari per il progetto, sia il dataset su cui viene effettuato il training, salvati rispettivamente nelle cartelle node_modules/ e data/. Verrà inoltre creata una cartella models/, dove vengono salvati i modelli su cui i nodi effettuano il training.
