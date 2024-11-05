@@ -110,6 +110,7 @@ async function on_model_received ({ stream }) {
 			index_training = index_training + 1
 			num_send_to_do = num_send_to_do + 1
 			age_local_model = age_local_model + 1
+      console.log('Index training round: ' + index_training + " Age modello locale: " + age_local_model)
 		})
 	}
 	
@@ -294,7 +295,7 @@ node.addEventListener('peer:discovery', async(evt) => {
 			}
 		}
 	}
-  console.log("Evento discovery, sono fuori dal ciclo.\n")
+  //console.log("Evento discovery, sono fuori dal ciclo.\n")
 })
 
 
