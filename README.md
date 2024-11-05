@@ -11,4 +11,4 @@ Per avviare l'apprendimento occorre lanciare da riga di comando il comando docke
 
 Durante la build verranno scaricati sia i moduli di Node.js necessari per il progetto, sia il dataset su cui viene effettuato il training, salvati rispettivamente nelle cartelle node_modules/ e data/. Verrà inoltre creata una cartella models/, dove vengono salvati i modelli su cui i nodi effettuano il training.
 
-Attualmente sembra che l'esecuzione del programma non esca dal secondo ciclo for della funzione client_update, definita alla riga 189.
+Attualmente sembra che l'esecuzione del programma non esca dal secondo ciclo for della funzione client_update, definita alla riga 189 del file gossip_learning.js.
