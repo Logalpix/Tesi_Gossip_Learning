@@ -299,12 +299,12 @@ node.addEventListener('peer:discovery', async(evt) => {
 
 await python.ex`
 	train_loader = create_train_loader()
-  if torch.cuda.is_available():
-    local_model = MyModel().cuda()
-    received_model = MyModel().cuda()
-  else:
-    local_model = MyModel().to('cpu')
-    received_model = MyModel().to('cpu')
+if torch.cuda.is_available():
+  local_model = MyModel().cuda()
+  received_model = MyModel().cuda()
+else:
+  local_model = MyModel().to('cpu')
+  received_model = MyModel().to('cpu')
 	opt = optim.SGD(local_model.parameters(), lr=0.1)
 	
 	test_loader = create_test_loader()
@@ -326,6 +326,7 @@ for(let i=0; i< NUM_ROUNDS; i++){
 	await lock.acquire('key', async() => {
 		await python.ex`
 		torch.save(local_model.state_dict(), ${path_dir_models} + ${my_model_name})
+  print("Modello salvato.")
 		`
 		content_model_file = await fs.readFileSync(path_dir_models + my_model_name)
 		num_send_to_do = num_send_to_do - 1
