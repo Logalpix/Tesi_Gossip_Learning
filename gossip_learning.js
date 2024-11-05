@@ -299,8 +299,12 @@ node.addEventListener('peer:discovery', async(evt) => {
 
 await python.ex`
 	train_loader = create_train_loader()
-	local_model = MyModel().to('cpu')
-	received_model = MyModel().to('cpu')
+  if torch.cuda.is_available():
+    local_model = MyModel().cuda()
+    received_model = MyModel().cuda()
+  else:
+    local_model = MyModel().to('cpu')
+    received_model = MyModel().to('cpu')
 	opt = optim.SGD(local_model.parameters(), lr=0.1)
 	
 	test_loader = create_test_loader()
