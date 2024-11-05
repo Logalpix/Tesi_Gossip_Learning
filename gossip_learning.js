@@ -117,7 +117,8 @@ async function on_model_received ({ stream }) {
 }
 
 var python = pythonBridge({
-    python: 'python'
+    python: 'python',
+    stdio: ['pipe', process.stdout, process.stderr]
 })
 
 await python.ex`
