@@ -109,6 +109,7 @@ async function on_model_received ({ stream }) {
 			
 			test_loss, acc = test(local_model, test_loader)
 			print('%d-th round, test acc: %0.5f' % (${index_training}, acc))
+  logging.debug("Training iteration complete.")
 			`
 			index_training = index_training + 1
 			num_send_to_do = num_send_to_do + 1
