@@ -96,12 +96,15 @@ async function on_model_received ({ stream }) {
 		await lock.acquire('key', async() => {
 			await python.ex`
 			print("loading model received")
+  logging.debug("Loading received model.")
 			received_model.load_state_dict(torch.load(${path_dir_models} + ${random_name_file}))
 			
 			print("merging local model with received model")
+  logging.debug("Merging local model with received model.")
 			merge_models(local_model, int(${age_local_model}), received_model, int(${age_received_model}))
 			
 			print("training model")	
+  logging.debug("Training model.")
 			client_update(local_model, opt, train_loader, epoch=epochs)
 			
 			test_loss, acc = test(local_model, test_loader)
@@ -135,6 +138,8 @@ from torch.utils.data.dataset import Dataset
 torch.backends.cudnn.benchmark=True
 
 import os
+import logging
+logging.basicConfig(level = logging.DEBUG)
 	
 num_sample_per_client_training = 2500
 num_sample_test = 5000
@@ -302,9 +307,11 @@ node.addEventListener('peer:discovery', async(evt) => {
 await python.ex`
 	train_loader = create_train_loader()
 if torch.cuda.is_available():
+  logging.debug("CUDA disponibile e in uso")
   local_model = MyModel().cuda()
   received_model = MyModel().cuda()
 else:
+  logging.debug("CUDA non disponibile; utilizzo la CPU.")
   local_model = MyModel().to('cpu')
   received_model = MyModel().to('cpu')
 opt = optim.SGD(local_model.parameters(), lr=0.1)
@@ -328,7 +335,7 @@ for(let i=0; i< NUM_ROUNDS; i++){
 	await lock.acquire('key', async() => {
 		await python.ex`
 		torch.save(local_model.state_dict(), ${path_dir_models} + ${my_model_name})
-  print("Modello salvato.")
+  logging.debug("Modello salvato.")
 		`
 		content_model_file = await fs.readFileSync(path_dir_models + my_model_name)
 		num_send_to_do = num_send_to_do - 1
