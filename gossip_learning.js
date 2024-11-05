@@ -187,15 +187,22 @@ class MyModel(nn.Module):
 
 
 def client_update(client_model, optimizer, train_loader, epoch=5):
+  logging.debug("Training avviato.")
   client_model.train()
   for e in range(epoch):
     for batch_idx, (data, target) in enumerate(train_loader):
-      data, target = data.to('cpu'), target.to('cpu')
+      if torch.cuda.is_available():
+        data, target = data.cuda(), target.cuda()
+        logging.debug("Sto usando CUDA.")
+      else:
+        data, target = data.to('cpu'), target.to('cpu')
+        logging.debug("CUDA non disponibile. Sto usando la CPU.")
       optimizer.zero_grad()
       output = client_model(data)
       loss = F.nll_loss(output, target)
       loss.backward()
       optimizer.step()
+  logging.debug("Training completato.")
   return loss.item()
 
 
@@ -205,7 +212,10 @@ def test(model, test_loader):
   correct = 0
   with torch.no_grad():
     for data, target in test_loader:
-      data, target = data.to('cpu'), target.to('cpu')
+      if torch.cuda.is_available():
+        data, target = data.cuda(), target.cuda()
+      else:
+        data, target = data.to('cpu'), target.to('cpu')
       output = model(data)
       test_loss += F.nll_loss(output, target, reduction='sum').item()
       pred = output.argmax(dim=1, keepdim=True)
