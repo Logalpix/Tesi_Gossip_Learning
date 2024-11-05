@@ -305,9 +305,9 @@ if torch.cuda.is_available():
 else:
   local_model = MyModel().to('cpu')
   received_model = MyModel().to('cpu')
-	opt = optim.SGD(local_model.parameters(), lr=0.1)
+opt = optim.SGD(local_model.parameters(), lr=0.1)
 	
-	test_loader = create_test_loader()
+test_loader = create_test_loader()
 `
 console.log("Train loader e test loader creati.\n")
 
