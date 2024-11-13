@@ -97,18 +97,19 @@ async function on_model_received ({ stream }) {
 			await python.ex`
 			print("loading model received")
   logging.debug("Loading received model.")
-			received_model.load_state_dict(torch.load(${path_dir_models} + ${random_name_file}))
+	received_model.load_state_dict(torch.load(${path_dir_models} + ${random_name_file}))
 			
 			print("merging local model with received model")
   logging.debug("Merging local model with received model.")
-			merge_models(local_model, int(${age_local_model}), received_model, int(${age_received_model}))
+	merge_models(local_model, int(${age_local_model}), received_model, int(${age_received_model}))
 			
 			print("training model")	
   logging.debug("Training model.")
-			client_update(local_model, opt, train_loader, epoch=epochs)
+	client_update(local_model, opt, train_loader, epoch=epochs)
 			
-			test_loss, acc = test(local_model, test_loader)
+	test_loss, acc = test(local_model, test_loader)
 			print('%d-th round, test acc: %0.5f' % (${index_training}, acc))
+  logging.debug('%d-th round, test acc: %0.5f' % (${index_training}, acc))
   logging.debug("Training iteration complete.")
 			`
 			index_training = index_training + 1
@@ -316,7 +317,7 @@ node.addEventListener('peer:discovery', async(evt) => {
 
 
 await python.ex`
-	train_loader = create_train_loader()
+train_loader = create_train_loader()
 if torch.cuda.is_available():
   logging.debug("CUDA disponibile e in uso")
   local_model = MyModel().cuda()
