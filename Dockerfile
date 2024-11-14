@@ -15,7 +15,7 @@ RUN python3 -m venv /app/venv
 
 # Attivare l'ambiente virtuale e installare le dipendenze Python
 RUN /app/venv/bin/pip install --upgrade pip
-RUN /app/venv/bin/pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN /app/venv/bin/pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
 
 # Copia il package.json e package-lock.json nella directory di lavoro
 COPY package*.json ./

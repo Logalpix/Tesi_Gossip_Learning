@@ -194,10 +194,10 @@ def client_update(client_model, optimizer, train_loader, epoch=5):
     for batch_idx, (data, target) in enumerate(train_loader):
       if torch.cuda.is_available():
         data, target = data.cuda(), target.cuda()
-        logging.debug("Sto usando CUDA.")
+        #logging.debug("Sto usando CUDA.")
       else:
         data, target = data.to('cpu'), target.to('cpu')
-        logging.debug("CUDA non disponibile. Sto usando la CPU.")
+        #logging.debug("CUDA non disponibile. Sto usando la CPU.")
       optimizer.zero_grad()
       output = client_model(data)
       loss = F.nll_loss(output, target)
@@ -247,10 +247,11 @@ def create_train_loader():
     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
   ])
 
-  train_data = datasets.CIFAR10('./data', train=True, download=True, transform= transform_train)
+  train_data = datasets.CIFAR10('/app/data', train=True, download=True, transform= transform_train)
 
   train_data_split = torch.utils.data.random_split(train_data, [num_sample_per_client_training, train_data.data.shape[0] - num_sample_per_client_training])[0]
   train_loader = torch.utils.data.DataLoader(train_data_split, batch_size=batch_size, shuffle=True)
+  logging.debug("Train loader creato.")
   return train_loader
 
 
@@ -260,11 +261,12 @@ def create_test_loader():
     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
   ])
 
-  test_data = datasets.CIFAR10('./data', train=False, download=True, transform=transform_test)
+  test_data = datasets.CIFAR10('/app/data', train=False, download=True, transform=transform_test)
 
   test_data_split = torch.utils.data.random_split(test_data, [num_sample_test, test_data.data.shape[0] - num_sample_test])[0]
   test_loader = torch.utils.data.DataLoader(test_data_split, batch_size=batch_size, shuffle=True)
   #print(test_data_split.indices)
+  logging.debug("Test loader creato.")
   return test_loader
   
   
