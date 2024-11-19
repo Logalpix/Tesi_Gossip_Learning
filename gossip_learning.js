@@ -196,11 +196,11 @@ def client_update(client_model, optimizer, train_loader, epoch=5):
     for batch_idx, (data, target) in enumerate(train_loader):
       if torch.cuda.is_available():
         data, target = data.cuda(), target.cuda()
-        logging.debug(f"Data shape: {data.shape}, Target shape: {target.shape}")
+        #logging.debug(f"Data shape: {data.shape}, Target shape: {target.shape}")
         #logging.debug("Sto usando CUDA.")
       else:
         data, target = data.to('cpu'), target.to('cpu')
-        logging.debug(f"Data shape: {data.shape}, Target shape: {target.shape}")
+        #logging.debug(f"Data shape: {data.shape}, Target shape: {target.shape}")
         #logging.debug("CUDA non disponibile. Sto usando la CPU.")
       optimizer.zero_grad()
       output = client_model(data)
