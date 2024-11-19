@@ -194,10 +194,10 @@ def client_update(client_model, optimizer, train_loader, epoch=5):
     for batch_idx, (data, target) in enumerate(train_loader):
       if torch.cuda.is_available():
         data, target = data.cuda(), target.cuda()
-        #logging.debug("Sto usando CUDA.")
+        logging.debug("Sto usando CUDA.")
       else:
         data, target = data.to('cpu'), target.to('cpu')
-        #logging.debug("CUDA non disponibile. Sto usando la CPU.")
+        logging.debug("CUDA non disponibile. Sto usando la CPU.")
       optimizer.zero_grad()
       output = client_model(data)
       loss = F.nll_loss(output, target)

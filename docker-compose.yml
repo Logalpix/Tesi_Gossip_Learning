@@ -8,8 +8,6 @@ services:
     deploy:
       mode: replicated
       replicas: 8
-    volumes:
-      - ./data:/app/data
     networks:
       - gossip_net
 
