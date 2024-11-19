@@ -189,18 +189,24 @@ class MyModel(nn.Module):
 
 def client_update(client_model, optimizer, train_loader, epoch=5):
   logging.debug("Training avviato.")
+  if len(train_loader) == 0:
+    logging.error("Il train loader è vuoto. Verifica il dataset.")
   client_model.train()
   for e in range(epoch):
     for batch_idx, (data, target) in enumerate(train_loader):
       if torch.cuda.is_available():
         data, target = data.cuda(), target.cuda()
-        logging.debug("Sto usando CUDA.")
+        logging.debug(f"Data shape: {data.shape}, Target shape: {target.shape}")
+        #logging.debug("Sto usando CUDA.")
       else:
         data, target = data.to('cpu'), target.to('cpu')
-        logging.debug("CUDA non disponibile. Sto usando la CPU.")
+        logging.debug(f"Data shape: {data.shape}, Target shape: {target.shape}")
+        #logging.debug("CUDA non disponibile. Sto usando la CPU.")
       optimizer.zero_grad()
       output = client_model(data)
       loss = F.nll_loss(output, target)
+      if not torch.isfinite(loss):
+        logging.error("Loss non finita: controlla i dati e il modello.")
       loss.backward()
       optimizer.step()
   logging.debug("Training completato.")
@@ -252,6 +258,7 @@ def create_train_loader():
   train_data_split = torch.utils.data.random_split(train_data, [num_sample_per_client_training, train_data.data.shape[0] - num_sample_per_client_training])[0]
   train_loader = torch.utils.data.DataLoader(train_data_split, batch_size=batch_size, shuffle=True)
   logging.debug("Train loader creato.")
+  logging.debug('Dimensioni train loader: %d' % len(train_loader))
   return train_loader
 
 
@@ -267,6 +274,7 @@ def create_test_loader():
   test_loader = torch.utils.data.DataLoader(test_data_split, batch_size=batch_size, shuffle=True)
   #print(test_data_split.indices)
   logging.debug("Test loader creato.")
+  logging.debug('Dimensioni test loader: %d' % len(test_loader))
   return test_loader
   
   
