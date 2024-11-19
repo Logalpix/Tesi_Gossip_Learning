@@ -207,10 +207,11 @@ def client_update(client_model, optimizer, train_loader, epoch=5):
       loss = F.nll_loss(output, target)
       if not torch.isfinite(loss):
         logging.error("Loss non finita: controlla i dati e il modello.")
-      logging.debug(f"Loss: {loss.item()}")
+      #logging.debug(f"Loss: {loss.item()}")
       loss.backward()
-      logging.debug(f"Loss: {loss.item()}")
+      #logging.debug(f"Loss: {loss.item()}")
       optimizer.step()
+      logging.debug(f"Epoch {e+1}, Loss: {loss.item()}")
   logging.debug("Training completato.")
   return loss.item()
 
