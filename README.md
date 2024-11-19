@@ -11,4 +11,4 @@ Per avviare l'apprendimento occorre lanciare da riga di comando il comando docke
 
 Durante la build verranno scaricati sia i moduli di Node.js necessari per il progetto, sia il dataset su cui viene effettuato il training, salvati rispettivamente nelle cartelle node_modules/ e data/. Verrà inoltre creata una cartella models/, dove vengono salvati i modelli su cui i nodi effettuano il training.
 
-Attualmente sembra che l'esecuzione del programma non esca dal secondo ciclo for della funzione client_update, definita alla riga 189 del file gossip_learning.js.
+AGGIORNAMENTO 19/11/2024: I problemi di connessione tra i peer sono stati risolti. Ho aggiunto dei log nella funzione client_update e nella creazione di train loader e test loader per verificare l'integrità dei dati e la correttezza dei valori. Sembra che il training venga effettuato correttamente, tuttavia continua a ciclare all'infinito. Al momento mi sto focalizzando sui parametri del ciclo for per capire a cosa è dovuto tale problema.
