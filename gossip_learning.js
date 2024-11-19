@@ -194,6 +194,7 @@ def client_update(client_model, optimizer, train_loader, epoch=5):
   client_model.train()
   for e in range(epoch):
     for batch_idx, (data, target) in enumerate(train_loader):
+      logging.debug(f"Processing batch {batch_idx}")
       if torch.cuda.is_available():
         data, target = data.cuda(), target.cuda()
         #logging.debug(f"Data shape: {data.shape}, Target shape: {target.shape}")
