@@ -162,7 +162,7 @@ class MyModel(nn.Module):
       nn.ReLU(True),
       nn.Linear(128, 64),
       nn.ReLU(True),
-      nn.Linear(64, 10)
+      nn.Linear(64, 43)
     )
 
   def forward(self, x):
@@ -251,15 +251,16 @@ def merge_models(local_model, age_local_model, received_model, age_received_mode
 
 def create_train_loader():
   transform_train = transforms.Compose([
-    transforms.RandomCrop(32, padding=4),
+    transforms.Resize((32, 32)),
+    #transforms.RandomCrop(32, padding=4),
     transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+    transforms.Normalize((0.3403, 0.3121, 0.3214), (0.2724, 0.2608, 0.2669)),
   ])
 
-  train_data = datasets.CIFAR10('/app/data', train=True, download=True, transform= transform_train)
+  train_data = datasets.GTSRB('/app/data', split='train', download=True, transform=transform_train)
 
-  train_data_split = torch.utils.data.random_split(train_data, [num_sample_per_client_training, train_data.data.shape[0] - num_sample_per_client_training])[0]
+  train_data_split = torch.utils.data.random_split(train_data, [num_sample_per_client_training, len(train_data) - num_sample_per_client_training])[0]
   train_loader = torch.utils.data.DataLoader(train_data_split, batch_size=batch_size, shuffle=True)
   logging.debug("Train loader creato.")
   logging.debug('Dimensioni train loader: %d' % len(train_loader))
@@ -268,13 +269,14 @@ def create_train_loader():
 
 def create_test_loader():
   transform_test = transforms.Compose([
+    transforms.Resize((32, 32)),
     transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+    transforms.Normalize((0.3403, 0.3121, 0.3214), (0.2724, 0.2608, 0.2669)),
   ])
 
-  test_data = datasets.CIFAR10('/app/data', train=False, download=True, transform=transform_test)
+  test_data = datasets.GTSRB('/app/data', split='test', download=True, transform=transform_test)
 
-  test_data_split = torch.utils.data.random_split(test_data, [num_sample_test, test_data.data.shape[0] - num_sample_test])[0]
+  test_data_split = torch.utils.data.random_split(test_data, [num_sample_test, len(test_data) - num_sample_test])[0]
   test_loader = torch.utils.data.DataLoader(test_data_split, batch_size=batch_size, shuffle=True)
   #print(test_data_split.indices)
   logging.debug("Test loader creato.")
