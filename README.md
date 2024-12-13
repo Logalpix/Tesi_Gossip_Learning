@@ -3,7 +3,7 @@ Il progetto consiste in un'implementazione di gossip learning utilizzando Node.j
 Per avviare il progetto è necessaria l'installazione sul sistema di Docker, Docker Compose, Node.js (versione 20 o superiore), Python, PyTorch e, opzionalmente, CUDA.
 
 La rete neurale è costituita da 8 nodi, istanziati come container Docker e definiti nel file docker-compose.yml.
-Attualmente, il dataset su cui viene effettuato l'apprendimento è CIFAR-10, definito all'interno del codice python nel file gossip_learning.js.
+Attualmente, il dataset su cui viene effettuato l'apprendimento è GTSRB, definito all'interno del codice python nel file gossip_learning.js.
 Per eseguire codice python su Node.js è stata usata la libreria python-bridge.
 Per la comunicazione tra i nodi è stata usata la libreria libp2p.
 
