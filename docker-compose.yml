@@ -7,6 +7,8 @@ services:
       - NODE_ENV=production
       - NVIDIA_VISIBLE_DEVICES=all  # Rende visibili tutte le GPU
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility  # Specifica le funzionalità CUDA
+    volumes:
+      - ./results:/app/results
     deploy:
       mode: replicated
       replicas: 8
