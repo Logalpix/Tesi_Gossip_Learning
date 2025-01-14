@@ -45,10 +45,6 @@ function get_ip_addr(){
   throw new Error('Nessun indirizzo IP valido trovato');
 }
 
-function get_peerid_from_multiadd(multiadd){
-	return multiadd.substring(get_position_str(multiadd, '/', 6)+1, get_position_str(multiadd, '/', 7))
-}
-
 function create_random_str(length) {
     let result = ''
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
@@ -322,12 +318,9 @@ console.log('MY ADDRESS: ', node.getMultiaddrs(), '\n')
 node.addEventListener('peer:discovery', async(evt) => {
 	
 	for(let i=0; i < evt.detail.multiaddrs.length; i++){
-    //console.log("Evento discovery, iterazione n. " + i)
-    //console.log("Numero multiaddr trovati: " + evt.detail.multiaddrs.length + "\n")
     console.log(evt.detail)
 		if(evt.detail.multiaddrs[i].toString().includes('tcp')){
       console.log("Peer trovato.")
-			//let peerid = get_peerid_from_multiadd(evt.detail.multiaddrs[i].toString())
       let peerid = evt.detail.id
 			if(peer_id_known_peers.includes(peerid) == false){
         console.log("Aggiungo il peer.\n")
@@ -338,7 +331,6 @@ node.addEventListener('peer:discovery', async(evt) => {
 			}
 		}
 	}
-  //console.log("Evento discovery, sono fuori dal ciclo.\n")
 })
 
 
