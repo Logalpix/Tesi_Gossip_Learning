@@ -3,8 +3,6 @@ import { createLibp2p } from 'libp2p'
 import { tcp } from '@libp2p/tcp'
 import { mplex } from '@libp2p/mplex'
 import { noise } from '@chainsafe/libp2p-noise'
-import { peerIdFromString } from '@libp2p/peer-id'
-import { multiaddr } from 'multiaddr'
 import { mdns } from '@libp2p/mdns'
 import { pipe } from 'it-pipe'
 import toBuffer from 'it-to-buffer'
@@ -27,10 +25,6 @@ var age_local_model = 0
 var index_training = 0
 
 const NUM_ROUNDS = 150
-
-function get_position_str(string, subString, index) {
-	return string.split(subString, index).join(subString).length
-}
 
 function get_ip_addr(){
   const interfaces = os.networkInterfaces();
