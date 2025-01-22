@@ -370,7 +370,6 @@ for(let i=0; i< NUM_ROUNDS; i++){
 	console.log('sha256 del file modello inviato: ', sha256(content_model_file))
 	console.log('invio verso', peer_id_known_peers[random_peer], ' random_peer', random_peer)
 	
-	//const stream = await node.dialProtocol(peerIdFromString(peer_id_known_peers[random_peer]), '/on_model_received')
   const stream = await node.dialProtocol(peer_id_known_peers[random_peer], '/on_model_received')
 	const buff_age = Buffer.alloc(2)
 	buff_age.writeUInt16BE(age_local_model_to_send)
