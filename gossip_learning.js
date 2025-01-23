@@ -248,7 +248,6 @@ def merge_models(local_model, age_local_model, received_model, age_received_mode
 def create_train_loader():
   transform_train = transforms.Compose([
     transforms.Resize((32, 32)),
-    #transforms.RandomCrop(32, padding=4),
     transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
     transforms.Normalize((0.3403, 0.3121, 0.3214), (0.2724, 0.2608, 0.2669)),
