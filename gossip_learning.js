@@ -134,8 +134,8 @@ import os
 import logging
 logging.basicConfig(level = logging.DEBUG)
 	
-num_sample_per_client_training = 2500
-num_sample_test = 5000
+num_sample_per_client_training = 5000
+num_sample_test = 2500
 
 epochs = 5
 batch_size = 32
