@@ -60,7 +60,7 @@ function delay(time) {
 }
 
 async function on_model_received ({ stream }) {
-  console.log("Metodo on_model_received invocato.")
+  //console.log("Metodo on_model_received invocato.")
 	const result = await pipe(
 		stream,
 		async function * (source) {
@@ -327,7 +327,7 @@ node.addEventListener('peer:discovery', async(evt) => {
 				peer_id_known_peers.push(peerid)
 				await delay(20000)
 				num_of_known_peers = num_of_known_peers + 1
-        console.log("Peer totali: " + peer_id_known_peers.length + ", Peer conosciuti: " + num_of_known_peers)
+        //console.log("Peer totali: " + peer_id_known_peers.length + ", Peer conosciuti: " + num_of_known_peers)
 			}
 		}
 	}
@@ -361,7 +361,7 @@ while(num_of_known_peers < 1){
 var content_model_file
 var age_local_model_to_send
 for(let i=0; i< NUM_ROUNDS; i++){
-  console.log("Sono nel ciclo per salvare il modello.\n")
+  //console.log("Sono nel ciclo per salvare il modello.\n")
 	await lock.acquire('key', async() => {
 		await python.ex`
 		torch.save(local_model.state_dict(), ${path_dir_models} + ${my_model_name})
